@@ -1,4 +1,5 @@
 import Placeholder from "@tiptap/extension-placeholder";
+import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -8,6 +9,11 @@ const Editor = () => {
       StarterKit,
       Placeholder.configure({
         placeholder: "文字を入力してください。",
+      }),
+      Youtube.configure({
+        controls: true,
+        nocookie: true,
+        inline: false,
       }),
     ],
     editorProps: {
