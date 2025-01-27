@@ -6,7 +6,7 @@ import StarterKit from "@tiptap/starter-kit";
 const Editor = () => {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ heading: { levels: [2, 3, 4] } }),
       Placeholder.configure({
         placeholder: "文字を入力してください。",
       }),
