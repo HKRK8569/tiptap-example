@@ -11,6 +11,23 @@ export interface ImageAttributes {
   height: string;
 }
 
+declare module "@tiptap/react" {
+  interface Commands<ReturnType> {
+    image: {
+      setImage: (options: {
+        "data-natural-width": number;
+        "data-natural-height": number;
+        "data-size": string;
+        "data-style": string;
+        src: string;
+        alt: string;
+        height: number;
+        width: number;
+      }) => ReturnType;
+    };
+  }
+}
+
 export const Image = Node.create({
   name: "image",
 
@@ -99,5 +116,17 @@ export const Image = Node.create({
         },
       ],
     ];
+  },
+  addCommands() {
+    return {
+      setImage:
+        (options) =>
+        ({ commands }) => {
+          return commands.insertContent({
+            type: this.name,
+            attrs: options,
+          });
+        },
+    };
   },
 });
