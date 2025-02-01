@@ -26,7 +26,16 @@ const Editor = () => {
     return null;
   }
 
-  return <EditorContent editor={editor} className="h-full w-full" />;
+  return (
+    <div className="h-full w-full relative">
+      <div className="absolute bottom-0 left-0 p-2">
+        <button className="p-2 bg-blue-300 text-white rounded">
+          画像を追加
+        </button>
+      </div>
+      <EditorContent editor={editor} />
+    </div>
+  );
 };
 
 export default Editor;
