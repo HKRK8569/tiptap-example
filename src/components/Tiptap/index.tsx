@@ -27,6 +27,29 @@ const Editor = () => {
     return null;
   }
 
+  const handleInsertImages = () => {
+    const img = document.createElement("img");
+    img.src = "500x500.png";
+
+    img.onload = () => {
+      const { naturalWidth, naturalHeight } = img;
+      editor
+        .chain()
+        .focus()
+        .setImage({
+          "data-natural-height": naturalHeight,
+          "data-natural-width": naturalWidth,
+          "data-size": "default",
+          "data-style": "default",
+          src: img.src,
+          alt: "",
+          height: naturalHeight,
+          width: naturalWidth,
+        })
+        .run();
+    };
+  };
+
   const onAddImageButton = async () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();
@@ -47,6 +70,9 @@ const Editor = () => {
         accept="image/png,image/jpeg,image/gif,image/webp,image/heic"
         ref={inputRef}
         type="file"
+        onChange={() => {
+          handleInsertImages();
+        }}
         className="hidden"
       />
       <EditorContent editor={editor} />
