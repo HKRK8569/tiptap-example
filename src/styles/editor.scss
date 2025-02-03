@@ -36,4 +36,29 @@
       list-style: disc;
     }
   }
+
+  figure {
+    margin: 1rem;
+  }
+
+  p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .e-image {
+    width: fit-content;
+    margin: 1.9em auto;
+  
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+
 }
