@@ -41,6 +41,14 @@
     margin: 1rem;
   }
 
+  figure.ProseMirror-selectednode.e-image {
+    img {
+      border: 3px solid rgba(15, 193, 255, 0.4);
+      box-sizing: border-box;
+    }
+  }
+  
+
   p.is-editor-empty:first-child::before {
     color: #adb5bd;
     content: attr(data-placeholder);
