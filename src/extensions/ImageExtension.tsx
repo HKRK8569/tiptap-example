@@ -122,10 +122,21 @@ export const Image = Node.create({
       setImage:
         (options) =>
         ({ commands }) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: options,
-          });
+          return commands.insertContent([
+            {
+              type: this.name,
+              attrs: options,
+            },
+            {
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "\n",
+                },
+              ],
+            },
+          ]);
         },
     };
   },
