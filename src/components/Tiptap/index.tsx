@@ -1,8 +1,9 @@
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "../../extensions/ImageExtension";
 import { useRef } from "react";
+import { ToolBar } from "../Toolbar";
 
 const Editor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -80,6 +81,17 @@ const Editor = () => {
       <div className="mx-auto w-full px-6 xs:px-7 sm:px-10 max-w-screen-md py-24">
         <EditorContent editor={editor} />
       </div>
+      <BubbleMenu
+        shouldShow={({ from, to }) => {
+          const isSelectImage = editor.isActive("image");
+          const isSelectRange = from !== to;
+
+          return isSelectImage || isSelectRange;
+        }}
+        editor={editor}
+      >
+        <ToolBar />
+      </BubbleMenu>
     </div>
   );
 };
