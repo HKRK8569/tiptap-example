@@ -90,7 +90,7 @@ const Editor = () => {
         }}
         editor={editor}
       >
-        <ToolBar />
+        <ToolBar editor={editor} />
       </BubbleMenu>
     </div>
   );

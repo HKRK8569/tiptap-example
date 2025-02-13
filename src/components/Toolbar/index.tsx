@@ -1,6 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Editor } from "@tiptap/react";
 
-export const ToolBar = () => {
+type Props = {
+  editor: Editor;
+};
+
+export const ToolBar = ({ editor }: Props) => {
   const [isVisibleAltInput, setVisibleAltInput] = useState(false);
   const [altText, setAltText] = useState("");
 
@@ -10,6 +15,10 @@ export const ToolBar = () => {
 
   const handleAltTextSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    editor.commands.updateAttributes("image", {
+      alt: altText,
+    });
+    setAltText("");
     setVisibleAltInput(false);
   };
 
