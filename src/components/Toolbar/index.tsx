@@ -5,7 +5,7 @@ type Props = {
   editor: Editor;
 };
 
-export const ToolBar = ({ editor }: Props) => {
+export const ImageToolBar = ({ editor }: Props) => {
   const [isVisibleAltInput, setVisibleAltInput] = useState(false);
   const [altText, setAltText] = useState("");
 

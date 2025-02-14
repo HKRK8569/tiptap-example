@@ -3,7 +3,7 @@ import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "../../extensions/ImageExtension";
 import { useRef } from "react";
-import { ToolBar } from "../Toolbar";
+import { ImageToolBar } from "../Toolbar";
 
 const Editor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -90,7 +90,7 @@ const Editor = () => {
         }}
         editor={editor}
       >
-        <ToolBar editor={editor} />
+        <ImageToolBar editor={editor} />
       </BubbleMenu>
     </div>
   );
