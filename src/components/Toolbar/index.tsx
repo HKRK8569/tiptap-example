@@ -1,30 +1,20 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Editor } from "@tiptap/react";
+import { ChangeEvent, FormEvent } from "react";
 
 type Props = {
-  editor: Editor;
+  altText: string;
+  isVisibleAltInput: boolean;
+  handleVisibleAltInput: () => void;
+  handleAltTextSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handleChangeAltText: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const ImageToolBar = ({ editor }: Props) => {
-  const [isVisibleAltInput, setVisibleAltInput] = useState(false);
-  const [altText, setAltText] = useState("");
-
-  const handleVisibleAltInput = () => {
-    setVisibleAltInput(true);
-  };
-
-  const handleAltTextSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    editor.commands.updateAttributes("image", {
-      alt: altText,
-    });
-    setAltText("");
-    setVisibleAltInput(false);
-  };
-
-  const handleChangeAltText = (event: ChangeEvent<HTMLInputElement>) => {
-    setAltText(event.target.value);
-  };
+export const ImageToolBar = ({
+  altText,
+  isVisibleAltInput,
+  handleAltTextSubmit,
+  handleChangeAltText,
+  handleVisibleAltInput,
+}: Props) => {
   return (
     <>
       {isVisibleAltInput ? (

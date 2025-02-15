@@ -2,11 +2,18 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "../../extensions/ImageExtension";
-import { useRef } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { ImageToolBar } from "../Toolbar";
 
 const Editor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isVisibleAltInput, setVisibleAltInput] = useState(false);
+  const [altText, setAltText] = useState("");
+
+  useEffect(() => {
+    console.log(isVisibleAltInput);
+  }, [isVisibleAltInput]);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3, 4] } }),
@@ -26,11 +33,32 @@ const Editor = () => {
     return null;
   }
 
+  const handleVisibleAltInput = () => {
+    setVisibleAltInput(true);
+  };
+
+  const handleHideAltInput = () => {
+    setAltText("");
+    setVisibleAltInput(false);
+  };
+
+  const handleAltTextSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editor.commands.updateAttributes("image", {
+      alt: altText,
+    });
+    setAltText("");
+    setVisibleAltInput(false);
+  };
+
+  const handleChangeAltText = (event: ChangeEvent<HTMLInputElement>) => {
+    setAltText(event.target.value);
+  };
+
   const handleInsertImages = (url: string) => {
     const img = document.createElement("img");
     img.src = url;
     img.onload = () => {
-      console.log(img);
       const { naturalWidth, naturalHeight } = img;
       editor
         .chain()
@@ -85,12 +113,18 @@ const Editor = () => {
         shouldShow={({ from, to }) => {
           const isSelectImage = editor.isActive("image");
           const isSelectRange = from !== to;
-
+          handleHideAltInput();
           return isSelectImage || isSelectRange;
         }}
         editor={editor}
       >
-        <ImageToolBar editor={editor} />
+        <ImageToolBar
+          altText={altText}
+          isVisibleAltInput={isVisibleAltInput}
+          handleVisibleAltInput={handleVisibleAltInput}
+          handleAltTextSubmit={handleAltTextSubmit}
+          handleChangeAltText={handleChangeAltText}
+        />
       </BubbleMenu>
     </div>
   );
