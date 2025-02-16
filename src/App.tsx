@@ -1,9 +1,9 @@
-import Tiptap from "./components/Tiptap";
+import TipTapEditor from "./components/Tiptap";
 
 export default function App() {
   return (
     <div className="min-h-screen">
-      <Tiptap />
+      <TipTapEditor />
     </div>
   );
 }

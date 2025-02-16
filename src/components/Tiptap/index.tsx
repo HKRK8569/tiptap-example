@@ -1,11 +1,32 @@
 import Placeholder from "@tiptap/extension-placeholder";
-import { BubbleMenu, EditorContent, useEditor } from "@tiptap/react";
+import { BubbleMenu, Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "../../extensions/ImageExtension";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { ImageToolBar } from "../Toolbar";
 
-const Editor = () => {
+export const handleInsertImages = (editor: Editor, url: string) => {
+  const img = document.createElement("img");
+  img.src = url;
+  img.onload = () => {
+    const { naturalWidth, naturalHeight } = img;
+    editor
+      .chain()
+      .focus()
+      .setImage({
+        "data-natural-height": naturalHeight,
+        "data-natural-width": naturalWidth,
+        "data-size": "default",
+        "data-style": "default",
+        src: img.src,
+        alt: "",
+        height: naturalHeight,
+        width: naturalWidth,
+      })
+      .run();
+  };
+};
+const TipTapEditor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isVisibleAltInput, setVisibleAltInput] = useState(false);
   const [altText, setAltText] = useState("");
@@ -55,28 +76,6 @@ const Editor = () => {
     setAltText(event.target.value);
   };
 
-  const handleInsertImages = (url: string) => {
-    const img = document.createElement("img");
-    img.src = url;
-    img.onload = () => {
-      const { naturalWidth, naturalHeight } = img;
-      editor
-        .chain()
-        .focus()
-        .setImage({
-          "data-natural-height": naturalHeight,
-          "data-natural-width": naturalWidth,
-          "data-size": "default",
-          "data-style": "default",
-          src: img.src,
-          alt: "",
-          height: naturalHeight,
-          width: naturalWidth,
-        })
-        .run();
-    };
-  };
-
   const onAddImageButton = async () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();
@@ -100,7 +99,7 @@ const Editor = () => {
             if (event.target.files) {
               const file = event.target.files[0];
               const url = URL.createObjectURL(file);
-              handleInsertImages(url);
+              handleInsertImages(editor, url);
             }
           }}
           className="hidden"
@@ -130,4 +129,4 @@ const Editor = () => {
   );
 };
 
-export default Editor;
+export default TipTapEditor;
