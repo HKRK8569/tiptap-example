@@ -5,26 +5,28 @@ import { Image } from "../../extensions/ImageExtension";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { ImageToolBar } from "../Toolbar";
 
-export const handleInsertImages = (editor: Editor, url: string) => {
-  const img = document.createElement("img");
-  img.src = url;
-  img.onload = () => {
-    const { naturalWidth, naturalHeight } = img;
-    editor
-      .chain()
-      .focus()
-      .setImage({
-        "data-natural-height": naturalHeight,
-        "data-natural-width": naturalWidth,
-        "data-size": "default",
-        "data-style": "default",
-        src: img.src,
-        alt: "",
-        height: naturalHeight,
-        width: naturalWidth,
-      })
-      .run();
-  };
+export const handleInsertImages = (editor: Editor, urls: string[]) => {
+  urls.forEach((url) => {
+    const img = document.createElement("img");
+    img.src = url;
+    img.onload = () => {
+      const { naturalWidth, naturalHeight } = img;
+      editor
+        .chain()
+        .focus()
+        .setImage({
+          "data-natural-height": naturalHeight,
+          "data-natural-width": naturalWidth,
+          "data-size": "default",
+          "data-style": "default",
+          src: img.src,
+          alt: "",
+          height: naturalHeight,
+          width: naturalWidth,
+        })
+        .run();
+    };
+  });
 };
 const TipTapEditor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,11 +97,18 @@ const TipTapEditor = () => {
           accept="image/png,image/jpeg,image/gif,image/webp,image/heic"
           ref={inputRef}
           type="file"
+          multiple
           onChange={(event) => {
             if (event.target.files) {
-              const file = event.target.files[0];
-              const url = URL.createObjectURL(file);
-              handleInsertImages(editor, url);
+              const files = event.target.files;
+              const urls: string[] = [];
+              if (files) {
+                for (const file of files) {
+                  const url = URL.createObjectURL(file);
+                  urls.push(url);
+                }
+              }
+              handleInsertImages(editor, urls);
             }
           }}
           className="hidden"
