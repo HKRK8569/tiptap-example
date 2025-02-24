@@ -75,6 +75,18 @@ const TipTapEditor = () => {
     setAltText(event.target.value);
   };
 
+  const handleChangeSize = (size: "default" | "small") => {
+    editor.commands.updateAttributes("image", {
+      "data-size": size
+    });
+  };
+
+  // const handleChangeStyle = () => {
+  //   editor.commands.updateAttributes("image", {
+  //     "data-style": isDefaultStyle ? "photo-frame" : "default",
+  //   });
+  // };
+
   const onAddImageButton = async () => {
     if (inputRef && inputRef.current) {
       inputRef.current.click();
@@ -129,6 +141,7 @@ const TipTapEditor = () => {
           handleVisibleAltInput={handleVisibleAltInput}
           handleAltTextSubmit={handleAltTextSubmit}
           handleChangeAltText={handleChangeAltText}
+          handleChangeSize={handleChangeSize}
         />
       </BubbleMenu>
     </div>
