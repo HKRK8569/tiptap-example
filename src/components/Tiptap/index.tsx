@@ -2,7 +2,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { BubbleMenu, Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "../../extensions/ImageExtension";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { ImageToolBar } from "../Toolbar";
 
 export const handleInsertImages = (editor: Editor, urls: string[]) => {
@@ -33,9 +33,6 @@ const TipTapEditor = () => {
   const [isVisibleAltInput, setVisibleAltInput] = useState(false);
   const [altText, setAltText] = useState("");
 
-  useEffect(() => {
-    console.log(isVisibleAltInput);
-  }, [isVisibleAltInput]);
 
   const editor = useEditor({
     extensions: [
