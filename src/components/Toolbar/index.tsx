@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import SizeChangeIcon from "../icon/ReductionIcon";
 import ReductionIcon from "../icon/ReductionIcon";
 import ExpansionIcon from "../icon/ExpansionIcon";
 
@@ -9,7 +8,7 @@ type Props = {
   handleVisibleAltInput: () => void;
   handleAltTextSubmit: (event: FormEvent<HTMLFormElement>) => void;
   handleChangeAltText: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleChangeSize: (size:"default" | "small") => void
+  handleChangeSize: (size: "default" | "small") => void;
 };
 
 export const ImageToolBar = ({
@@ -18,9 +17,9 @@ export const ImageToolBar = ({
   handleAltTextSubmit,
   handleChangeAltText,
   handleVisibleAltInput,
-  handleChangeSize
+  handleChangeSize,
 }: Props) => {
-  const [size, setSize] = useState("default")
+  const [size, setSize] = useState("default");
   return (
     <>
       {isVisibleAltInput ? (
@@ -50,18 +49,19 @@ export const ImageToolBar = ({
           >
             ALT
           </button>
-          <button onClick={()=>{
-            const changedSize = size === "default" ?  "small" : "default"
-            setSize(changedSize)
-            handleChangeSize(changedSize)
-          }} className="text-gray-300 text-xs rounded w-8 h-8 flex items-center justify-center outline-none shadow hover:opacity-50">
-            {
-              size === "default" ? (
-                <ReductionIcon className="size-4" />
-              ) : (
-                <ExpansionIcon className="size-4" />
-              )
-            }
+          <button
+            onClick={() => {
+              const changedSize = size === "default" ? "small" : "default";
+              setSize(changedSize);
+              handleChangeSize(changedSize);
+            }}
+            className="text-gray-300 text-xs rounded w-8 h-8 flex items-center justify-center outline-none shadow hover:opacity-50"
+          >
+            {size === "default" ? (
+              <ReductionIcon className="size-4" />
+            ) : (
+              <ExpansionIcon className="size-4" />
+            )}
           </button>
         </div>
       )}
